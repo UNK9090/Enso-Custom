@@ -6,7 +6,6 @@ Working Functions:
 1- Enable more testkit functions on retail ps vita
 2- Spoof SafeMode DEX
 3- Spoof Update Mode DEX
-4- Activation Test Kit Spoofed
 
 Non Working Functions:
 
