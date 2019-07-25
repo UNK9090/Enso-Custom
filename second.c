@@ -99,9 +99,7 @@ static int is_safe_mode(void) {
 
     if (boot_args->debug_flags[7] != 0xFF) {
         return 1;
-    } else {
-        (*sysroot_ctx_ptr)->boot_args->device_type = 0x201;
-        return 0;
+
     }
 
     v = boot_args->boot_type_indicator_2 & 0x7F;
@@ -129,14 +127,13 @@ static int is_update_mode(void) {
     if (boot_args->debug_flags[4] != 0xFF) {
         return 1;
     } else {
-        (*sysroot_ctx_ptr)->boot_args->device_type = 0x201;
         return 0;
     }
 }
 
 
 static inline int skip_patches(void) {
-    return is_safe_mode() || is_update_mode();
+    return 0;
 }
 
 // sdif patches for MBR redirection
@@ -276,15 +273,7 @@ static int module_load_patched(const SceModuleLoadList *list, int *uids, int cou
         if (obj != NULL) {
             mod = (SceModuleObject *)&obj->data;
             //FIND_EXPORT(set_crash_flag, 0x88C17370, 0xF857CDD6);
-            //FIND_EXPORT(printf, 0x88758561, 0x391B74B7);
-
-
-
-		boot_args->device_type = 0x201;		// ((0x201 >> 8) | (0x201 << 8) & 0xFFFF) // 0x201 testkit / IsDEX
-
-		(*sysroot_ctx_ptr)->boot_args->device_type = 0x201;
-
-
+            //FIND_EXPORT(printf, 0x88758561, 0x391B74B7);	
         } else {
             printf("module data invalid for sysmem.skprx!\n");
         }
